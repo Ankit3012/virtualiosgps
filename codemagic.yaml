@@ -1,18 +1,22 @@
+
 workflows:
   ios-unsigned-check:
-    name: Virtual GPS - compile check
+    name: Virtual GPS - iOS build
     max_build_duration: 60
     instance_type: mac_mini_m2
     environment:
       xcode: latest
+
     scripts:
       - name: Install XcodeGen
         script: |
           brew install xcodegen
+
       - name: Generate Xcode project
         script: |
           xcodegen generate
-      - name: Compile for iPhone (unsigned)
+
+      - name: Compile for iPhone
         script: |
           xcodebuild \
             -project VirtualGPS.xcodeproj \
@@ -22,5 +26,13 @@ workflows:
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Package unsigned IPA
+        script: |
+          mkdir -p ipa/Payload
+          cp -R build/Build/Products/Release-iphoneos/VirtualGPS.app ipa/Payload/
+          cd ipa
+          zip -r ../VirtualGPS-unsigned.ipa Payload
+
     artifacts:
-      - build/Build/Products/Release-iphoneos/*.app
+      - VirtualGPS-unsigned.ipa
