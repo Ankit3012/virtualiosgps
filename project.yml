@@ -1,0 +1,21 @@
+name: VirtualGPS
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "17.0"
+targets:
+  VirtualGPS:
+    type: application
+    platform: iOS
+    sources:
+      - path: VirtualGPS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.VirtualGPS
+        PRODUCT_NAME: VirtualGPS
+        SWIFT_VERSION: 5.0
+        TARGETED_DEVICE_FAMILY: "1"
+        INFOPLIST_KEY_CFBundleDisplayName: Virtual GPS
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: "Virtual GPS uses location access only if you choose to view your current position."
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Automatic
